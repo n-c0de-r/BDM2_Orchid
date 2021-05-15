@@ -149,6 +149,16 @@ public class GRDM_U2 implements PlugIn {
 				setSliderTitle(jSliderHue, str); 
 			}
 			
+			if (slider == jSliderContrast) {
+				if (slider.getValue() >5) {
+					contrast = slider.getValue()-(10-slider.getValue());
+				} else {
+					contrast = slider.getValue()/5.0;
+				}
+				String str = "Kontrast  " + contrast;
+				setSliderTitle(jSliderContrast, str); 
+			}
+			
 			changePixelValues(imp.getProcessor());
 			
 			imp.updateAndDraw();
@@ -186,6 +196,10 @@ public class GRDM_U2 implements PlugIn {
 					//Farbdrehung
 					U = ((Math.cos(Math.toRadians(hue))* U) + (-1*Math.sin(Math.toRadians(hue))*V));
 					V = ((Math.sin(Math.toRadians(hue))* U) + (Math.cos(Math.toRadians(hue))*V));
+					
+					//Kontrast
+					U = contrast * (U - 127.5) + 127.5;
+					V = contrast * (V - 127.5) + 127.5;
 					
 					//Zurückwandeln nach RGB, gemäß gegebener Formeln
 					int rn = (int) (Y + V/0.877);
