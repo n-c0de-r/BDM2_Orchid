@@ -155,6 +155,10 @@ public class GRDM_U2 implements PlugIn {
 					int g = (argb >>  8) & 0xff;
 					int b =  argb        & 0xff;
 					
+					//Umwandlung von RGB nach YUV, gemäß gegebener Formeln					
+					double Y = (0.299 * r) + (0.587 * g) + (0.114 * b);
+					double U =  0.493 * (b - Y);
+					double V =  0.877 * (r - Y);
 					
 					// anstelle dieser drei Zeilen spÃ¤ter hier die Farbtransformation durchfÃ¼hren,
 					// die Y Cb Cr -Werte verÃ¤ndern und dann wieder zurÃ¼cktransformieren
