@@ -162,9 +162,8 @@ public class GRDM_U2 implements PlugIn {
 					
 					// anstelle dieser drei Zeilen spÃ¤ter hier die Farbtransformation durchfÃ¼hren,
 					// die Y Cb Cr -Werte verÃ¤ndern und dann wieder zurÃ¼cktransformieren
-					int rn = (int) (r + brightness);
-					int gn = (int) (g + brightness);
-					int bn = (int) (b + brightness);
+					//Helligkeit
+					Y = Y + brightness;
 					
 					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
 					if (rn >=255) rn = 255;
