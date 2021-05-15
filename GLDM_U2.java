@@ -183,6 +183,10 @@ public class GRDM_U2 implements PlugIn {
 					U = U * saturation;
 					V = V * saturation;
 					
+					//Farbdrehung
+					U = ((Math.cos(Math.toRadians(hue))* U) + (-1*Math.sin(Math.toRadians(hue))*V));
+					V = ((Math.sin(Math.toRadians(hue))* U) + (Math.cos(Math.toRadians(hue))*V));
+					
 					//Zurückwandeln nach RGB, gemäß gegebener Formeln
 					int rn = (int) (Y + V/0.877);
 					int bn = (int) (Y + U/0.493);
