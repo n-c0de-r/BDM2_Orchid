@@ -183,6 +183,11 @@ public class GRDM_U2 implements PlugIn {
 					U = U * saturation;
 					V = V * saturation;
 					
+					//Zurückwandeln nach RGB, gemäß gegebener Formeln
+					int rn = (int) (Y + V/0.877);
+					int bn = (int) (Y + U/0.493);
+					int gn = (int) (1/0.587 * Y - 0.299/0.587 * rn - 0.114/0.587 * bn);
+					
 					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
 					if (rn >=255) rn = 255;
 					if (gn >=255) gn = 255;
