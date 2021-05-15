@@ -31,8 +31,7 @@ public class GRDM_U2 implements PlugIn {
 	
 	
     public static void main(String args[]) {
-		//new ImageJ();
-    	//IJ.open("/users/barthel/applications/ImageJ/_images/orchid.jpg");
+	//new ImageJ();
     	IJ.open("orchid.jpg");
 		
 		GRDM_U2 pw = new GRDM_U2();
@@ -198,13 +197,18 @@ public class GRDM_U2 implements PlugIn {
 					V = ((Math.sin(Math.toRadians(hue))* U) + (Math.cos(Math.toRadians(hue))*V));
 					
 					//Kontrast
-					U = contrast * (U - 127.5) + 127.5;
-					V = contrast * (V - 127.5) + 127.5;
+					//U = contrast * (U - 127.5) + 127.5;
+					//V = contrast * (V - 127.5) + 127.5;
 					
 					//Zurückwandeln nach RGB, gemäß gegebener Formeln
 					int rn = (int) (Y + V/0.877);
 					int bn = (int) (Y + U/0.493);
 					int gn = (int) (1/0.587 * Y - 0.299/0.587 * rn - 0.114/0.587 * bn);
+					
+					//Inkorrekte "Lösung" des Kontrasts, da das mit dem YUV nicht klappt!
+					rn = (int) (contrast * (rn-127.5) + 127.5);
+					gn = (int) (contrast * (gn-127.5) + 127.5);
+					bn = (int) (contrast * (bn-127.5) + 127.5);
 					
 					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
 					if (rn >=255) rn = 255;
