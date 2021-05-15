@@ -87,10 +87,14 @@ public class GRDM_U2 implements PlugIn {
         	Panel panel = new Panel();
 
             panel.setLayout(new GridLayout(4, 1));
-            jSliderBrightness = makeTitledSilder("Helligkeit", 0, 200, 100);
-            jSlider2 = makeTitledSilder("Slider2-Wert", 0, 100, 50);
+            jSliderBrightness = makeTitledSilder("Helligkeit", 0, 256, 128);
+            jSliderSaturation = makeTitledSilder("Sättigung", 0, 8, 4);
+            jSliderContrast = makeTitledSilder("Kontrast", 0, 10, 5);
+            jSliderHue = makeTitledSilder("Farbe", 0, 360, 0);
             panel.add(jSliderBrightness);
-            panel.add(jSlider2);
+            panel.add(jSliderSaturation);
+            panel.add(jSliderContrast);
+            panel.add(jSliderHue);
             
             add(panel);
             
@@ -124,9 +128,19 @@ public class GRDM_U2 implements PlugIn {
 			JSlider slider = (JSlider)e.getSource();
 
 			if (slider == jSliderBrightness) {
-				brightness = slider.getValue()-100;
+				brightness = slider.getValue()-128;
 				String str = "Helligkeit " + brightness; 
 				setSliderTitle(jSliderBrightness, str); 
+			}
+			
+			if (slider == jSliderSaturation) {
+				if (slider.getValue() >40) {
+					saturation = slider.getValue()-3;
+				} else {
+					saturation = slider.getValue()/4.0;
+				}
+				String str = "Sättigung " + saturation; 
+				setSliderTitle(jSliderSaturation, str); 
 			}
 			
 			if (slider == jSlider2) {
@@ -164,6 +178,10 @@ public class GRDM_U2 implements PlugIn {
 					// die Y Cb Cr -Werte verÃ¤ndern und dann wieder zurÃ¼cktransformieren
 					//Helligkeit
 					Y = Y + brightness;
+					
+					//Sättigung
+					U = U * saturation;
+					V = V * saturation;
 					
 					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
 					if (rn >=255) rn = 255;
