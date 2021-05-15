@@ -163,6 +163,12 @@ public class GRDM_U2 implements PlugIn {
 					int bn = (int) (b + brightness);
 					
 					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
+					if (rn >=255) rn = 255;
+					if (gn >=255) gn = 255;
+					if (bn >=255) bn = 255;
+					if (rn <=0) rn = 0;
+					if (gn <=0) gn = 0;
+					if (bn <=0) bn = 0;
 					
 					pixels[pos] = (0xFF<<24) | (rn<<16) | (gn<<8) | bn;
 				}
