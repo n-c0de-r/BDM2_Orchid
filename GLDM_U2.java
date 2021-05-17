@@ -196,19 +196,24 @@ public class GRDM_U2 implements PlugIn {
 					U = ((Math.cos(Math.toRadians(hue))* U) + (-1*Math.sin(Math.toRadians(hue))*V));
 					V = ((Math.sin(Math.toRadians(hue))* U) + (Math.cos(Math.toRadians(hue))*V));
 					
-					//Kontrast
-					//U = contrast * (U - 127.5) + 127.5;
-					//V = contrast * (V - 127.5) + 127.5;
-					
-					//Zurückwandeln nach RGB, gemäß gegebener Formeln
-					int rn = (int) (Y + V/0.877);
-					int bn = (int) (Y + U/0.493);
-					int gn = (int) (1/0.587 * Y - 0.299/0.587 * rn - 0.114/0.587 * bn);
-					
-					//Inkorrekte "Lösung" des Kontrasts, da das mit dem YUV nicht klappt!
-					rn = (int) (contrast * (rn-127.5) + 127.5);
-					gn = (int) (contrast * (gn-127.5) + 127.5);
-					bn = (int) (contrast * (bn-127.5) + 127.5);
+					// Kontrast, nach Hilfestellung durch LB voll funktionsfähig
+					Y = contrast * (Y - 128) + 128;
+					U = contrast * U;
+					V = contrast * V;
+
+					// Farbdrehung
+					U = ((Math.cos(Math.toRadians(hue)) * U) + (-1 * Math.sin(Math.toRadians(hue)) * V));
+					V = ((Math.sin(Math.toRadians(hue)) * U) + (Math.cos(Math.toRadians(hue)) * V));
+
+					// Zurückwandeln nach RGB, gemäß gegebener Formeln
+					int rn = (int) (Y + V / 0.877);
+					int bn = (int) (Y + U / 0.493);
+					int gn = (int) (1 / 0.587 * Y - 0.299 / 0.587 * rn - 0.114 / 0.587 * bn);
+
+					// Inkorrekte "Lösung" des Kontrasts, da das mit dem YUV nicht klappt!
+					//rn = (int) (contrast * (rn - 127.5) + 127.5);
+					//gn = (int) (contrast * (gn - 127.5) + 127.5);
+					//bn = (int) (contrast * (bn - 127.5) + 127.5);
 					
 					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
 					if (rn >=255) rn = 255;
