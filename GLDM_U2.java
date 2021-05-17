@@ -184,44 +184,21 @@ public class GRDM_U2 implements PlugIn {
 					double V =  0.877 * (r - Y);
 					
 					// anstelle dieser drei Zeilen spÃ¤ter hier die Farbtransformation durchfÃ¼hren,
-					// die Y Cb Cr -Werte verÃ¤ndern und dann wieder zurÃ¼cktransformieren
-					//Helligkeit
-					Y = Y + brightness;
-					
-					//Sättigung
-					U = U * saturation;
-					V = V * saturation;
-					
-					//Farbdrehung
-					U = ((Math.cos(Math.toRadians(hue))* U) + (-1*Math.sin(Math.toRadians(hue))*V));
-					V = ((Math.sin(Math.toRadians(hue))* U) + (Math.cos(Math.toRadians(hue))*V));
-					
-					// Kontrast, nach Hilfestellung durch LB voll funktionsfähig
-					Y = contrast * (Y - 128) + 128;
-					U = contrast * U;
-					V = contrast * V;
-
-					// Farbdrehung
-					U = ((Math.cos(Math.toRadians(hue)) * U) + (-1 * Math.sin(Math.toRadians(hue)) * V));
-					V = ((Math.sin(Math.toRadians(hue)) * U) + (Math.cos(Math.toRadians(hue)) * V));
+					// die Y U V -Werte verÃ¤ndern und dann wieder zurÃ¼cktransformieren
+					Y = (contrast * (Y - 128) + 128) + brightness;
+					U = ((Math.cos(Math.toRadians(hue)) * U) + (-1 * Math.sin(Math.toRadians(hue)) * V)) * contrast * saturation;
+					V = ((Math.sin(Math.toRadians(hue)) * U) + (Math.cos(Math.toRadians(hue)) * V)) * contrast * saturation;
 
 					// Zurückwandeln nach RGB, gemäß gegebener Formeln
 					int rn = (int) (Y + V / 0.877);
 					int bn = (int) (Y + U / 0.493);
 					int gn = (int) (1 / 0.587 * Y - 0.299 / 0.587 * rn - 0.114 / 0.587 * bn);
 
-					// Inkorrekte "Lösung" des Kontrasts, da das mit dem YUV nicht klappt!
-					//rn = (int) (contrast * (rn - 127.5) + 127.5);
-					//gn = (int) (contrast * (gn - 127.5) + 127.5);
-					//bn = (int) (contrast * (bn - 127.5) + 127.5);
-					
-					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255 begrenzt werden
-					if (rn >=255) rn = 255;
-					if (gn >=255) gn = 255;
-					if (bn >=255) bn = 255;
-					if (rn <=0) rn = 0;
-					if (gn <=0) gn = 0;
-					if (bn <=0) bn = 0;
+					// Hier muessen die neuen RGB-Werte wieder auf den Bereich von 0 bis 255
+					// begrenzt werden
+					rn =  Math.max(Math.min(rn, 255), 0);
+					gn =  Math.max(Math.min(gn, 255), 0);
+					bn =  Math.max(Math.min(bn, 255), 0);
 					
 					pixels[pos] = (0xFF<<24) | (rn<<16) | (gn<<8) | bn;
 				}
