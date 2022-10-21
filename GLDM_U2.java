@@ -73,10 +73,15 @@ public class GRDM_U2 implements PlugIn {
     class CustomWindow extends ImageWindow implements ChangeListener {
          
         private JSlider jSliderBrightness;
-		private JSlider jSlider2;
-		private double brightness;
+	private JSlider jSliderSaturation;
+	private JSlider jSliderContrast;
+	private JSlider jSliderHue;
+	private double brightness = 0.0;
+	private double saturation = 1.0;
+	private double contrast = 1.0;
+	private double hue = 0.0;
 
-		CustomWindow(ImagePlus imp, ImageCanvas ic) {
+	CustomWindow(ImagePlus imp, ImageCanvas ic) {
             super(imp, ic);
             addPanel();
         }
