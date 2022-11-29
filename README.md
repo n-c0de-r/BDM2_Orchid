@@ -1,4 +1,4 @@
-# DigitalMedia_Orchid
+# DigitalMedia2_Orchid
 YUV conversion and editing in Basics of Digital Media. 2nd semester, 2nd-exercise, digital media
 
 Goal was to learn to avoid overflows, calculate saturation, contrast, luminance & hue with all
